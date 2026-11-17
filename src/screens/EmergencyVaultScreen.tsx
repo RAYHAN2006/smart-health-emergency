@@ -4,15 +4,15 @@ import { saveMedicalProfile, getMedicalProfile, EmergencyMedicalProfile } from '
 import { useEmergencyPhoto } from '../hooks/useEmergencyPhoto';
 
 export default function EmergencyVaultScreen() {
-  // State dari Anggota 1 (Data Terenkripsi)
+  // State data rekam medis terenkripsi (Anggota 1)
   const [nik, setNik] = useState('');
   const [bloodType, setBloodType] = useState('');
   const [allergies, setAllergies] = useState('');
   const [emergencyContact, setEmergencyContact] = useState('');
   const [isSaved, setIsSaved] = useState(false);
 
-  // Hook dari Anggota 3 (Hardware & Scoped Storage)
-  const { photoUri, loading, errorMessage, capturePhoto } = useEmergencyPhoto();
+  // Hook kamera & Scoped Storage (Anggota 3)
+  const { photoUri, loading, errorMessage, capturePhoto, removePhoto } = useEmergencyPhoto();
 
   // Ambil profil saat pertama kali dibuka (Offline-First)
   useEffect(() => {
@@ -70,6 +70,11 @@ export default function EmergencyVaultScreen() {
           <View style={styles.previewBox}>
             <Text style={styles.previewLabel}>Foto Tersimpan di documentDirectory:</Text>
             <Image source={{ uri: photoUri }} style={styles.imagePreview} />
+
+            {/* Tombol Hapus / Ambil Ulang Foto */}
+            <TouchableOpacity style={styles.deleteButton} onPress={removePhoto}>
+              <Text style={styles.deleteButtonText}>Hapus & Ambil Ulang Foto</Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -91,4 +96,20 @@ const styles = StyleSheet.create({
   previewBox: { marginTop: 15, alignItems: 'center' },
   previewLabel: { color: '#AAA', fontSize: 12, marginBottom: 8 },
   imagePreview: { width: '100%', height: 200, borderRadius: 8 },
+  deleteButton: {
+    marginTop: 12,
+    backgroundColor: '#2A1818',
+    borderColor: '#E53935',
+    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    alignItems: 'center',
+    width: '100%',
+  },
+  deleteButtonText: {
+    color: '#FF5252',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
 });

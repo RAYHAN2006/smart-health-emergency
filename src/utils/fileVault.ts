@@ -1,10 +1,10 @@
 import * as FileSystem from 'expo-file-system/legacy';
 
-// Direktori khusus dokumen/foto darurat di dalam sandbox privat HP
+// Folder privat khusus di dalam sandbox memori aplikasi (Scoped Storage)
 const EMERGENCY_VAULT_DIR = `${FileSystem.documentDirectory}emergency_vault/`;
 
 /**
- * Memastikan direktori sandbox sudah ada
+ * Memastikan direktori sandbox sudah tersedia
  */
 async function ensureDirectoryExists(): Promise<void> {
   const dirInfo = await FileSystem.getInfoAsync(EMERGENCY_VAULT_DIR);
@@ -35,4 +35,14 @@ export async function saveToScopedStorage(sourceUri: string, fileName: string): 
 export async function getStoredEmergencyFiles(): Promise<string[]> {
   await ensureDirectoryExists();
   return await FileSystem.readDirectoryAsync(EMERGENCY_VAULT_DIR);
+}
+
+/**
+ * Menghapus file foto jika salah ambil foto
+ */
+export async function deleteEmergencyFile(fileUri: string): Promise<void> {
+  const fileInfo = await FileSystem.getInfoAsync(fileUri);
+  if (fileInfo.exists) {
+    await FileSystem.deleteAsync(fileUri, { idempotent: true });
+  }
 }
