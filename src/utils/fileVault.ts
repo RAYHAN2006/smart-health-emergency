@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 
 // Direktori khusus dokumen/foto darurat di dalam sandbox privat HP
 const EMERGENCY_VAULT_DIR = `${FileSystem.documentDirectory}emergency_vault/`;

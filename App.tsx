@@ -10,12 +10,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* Tampilkan Layar Sesuai Tab yang Dipilih /}
+      {/* Tampilkan Layar Sesuai Tab yang Dipilih */}
       <View style={styles.screenContainer}>
         {activeTab === 'gps' ? <MapScreen /> : <EmergencyVaultScreen />}
       </View>
 
-      {/ Menu Tombol Navigasi di Bagian Bawah */}
+      {/* Menu Tombol Navigasi di Bagian Bawah */}
       <View style={styles.bottomNav}>
         <TouchableOpacity
           style={[styles.navButton, activeTab === 'gps' && styles.activeNavButton]}
